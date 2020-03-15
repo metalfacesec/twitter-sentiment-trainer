@@ -12,6 +12,9 @@ class App extends Component {
 
 		this.showRandomSentace = this.showRandomSentace.bind(this);
 		this.getRandomSentance = this.getRandomSentance.bind(this);
+		this.clickNegative = this.clickNegative.bind(this);
+		this.clickPass = this.clickPass.bind(this);
+		this.clickPositive = this.clickPositive.bind(this);
 
 		this.showRandomSentace();
 	}
@@ -28,13 +31,15 @@ class App extends Component {
 		return response.data.text;
 	}
 	clickPositive() {
-
+		axios.post('http://localhost:3000/rate_tweet', { positive: true, text: this.state.sentance });
+		this.showRandomSentace();
 	}
 	clickNegative() {
-
+		axios.post('http://localhost:3000/rate_tweet', { positive: false, text: this.state.sentance });
+		this.showRandomSentace();
 	}
 	clickPass() {
-
+		this.showRandomSentace();
 	}
 	render() {
 		return (
@@ -45,6 +50,20 @@ class App extends Component {
 						<h3>{this.state.sentance}</h3>
 					</div>
 					<div className="col-1">&nbsp;</div>
+				</div>
+				<div style={{height: "50px"}}></div>
+				<div className="row">
+					<div className="col-3"></div>
+					<div className="col-2 text-center">
+						<button type="button" class="btn btn-danger" onClick={this.clickNegative}>Negative</button>
+					</div>
+					<div className="col-2 text-center">
+						<button type="button" class="btn btn-secondary" onClick={this.clickPass}>Pass</button>
+					</div>
+					<div className="col-2 text-center">
+						<button type="button" class="btn btn-success" onClick={this.clickPositive}>Positive</button>
+					</div>
+					<div className="col-3"></div>
 				</div>
 			</div>
     );

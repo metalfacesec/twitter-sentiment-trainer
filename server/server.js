@@ -1,12 +1,14 @@
 const express = require('express');
 const axios = require('axios');
 const randomWords = require('random-words');
+const bodyParser = require('body-parser')
 
 var cors = require('cors')
 
 var app = express();
 
 app.use(cors());
+app.use(bodyParser.json());   
 
 app.listen(3000, () => {
     console.log("Server running on port 3000");
@@ -19,8 +21,14 @@ app.get("/random_tweet", async (req, res, next) => {
     res.json({'text': tweet});
 });
 
+app.post("/rate_tweet", async (req, res, next) => {
+    console.log(req.body);
+
+    res.json({});
+});
+
 async function getAuthToken() {
-    let url = 'https://XXXAPIKEYXX:XXXAPISECRETXXX@api.twitter.com/oauth2/token';
+    let url = 'https://XXXXXX:XXXXX@api.twitter.com/oauth2/token';
     let response = await axios.post(url, null, {params: {'grant_type': 'client_credentials'}});
 
     return response.data.access_token;
